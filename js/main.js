@@ -3,6 +3,15 @@
 // =========================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  // ===== Base de datos (Supabase) para evitar confirmaciones duplicadas =====
+  // Reemplaza estos dos valores con los de tu proyecto en Supabase
+  // (Project Settings -> API -> Project URL / anon public key).
+  const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
+  const SUPABASE_ANON_KEY = 'TU_ANON_KEY_AQUI';
+  const supabaseClient = (window.supabase && !SUPABASE_URL.includes('TU-PROYECTO'))
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    : null;
+
   const welcomeScreen = document.getElementById('welcome-screen');
   const siteContent = document.getElementById('site-content');
   const enterBtn = document.getElementById('enter-btn');
@@ -205,6 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const nombresGroup = document.getElementById('nombres-group');
   const invitadoNombreInput = document.getElementById('invitado-nombre');
   const invitadoCuposInput = document.getElementById('invitado-cupos');
+  const rsvpSubmitBtn = document.getElementById('rsvp-submit-btn');
+  const cancionInput = document.getElementById('cancion');
+  const mensajeInput = document.getElementById('mensaje');
+  const nombresAcompanantesInput = document.getElementById('nombres-acompanantes');
 
   function resetModal() {
     stepForm.classList.add('hidden');
@@ -212,6 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.value = '';
     searchStatus.textContent = '';
     searchStatus.className = 'rsvp-status';
+    rsvpSubmitBtn.textContent = 'Enviar confirmación';
     rsvpForm.reset();
   }
 
@@ -230,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === modal) closeModal();
   });
 
-  function showGuestForm(guest) {
+  async function showGuestForm(guest) {
     guestGreeting.textContent = `¡Hola, ${guest.nombre}!`;
     const cuposClamped = Math.min(5, Math.max(1, guest.cupos));
     guestLugaresImg.src = `assets/Pngs/lugares ${cuposClamped}.png`;
@@ -244,14 +258,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     cuposSelect.value = guest.cupos;
 
+    const guestKey = normalize(guest.nombre);
     invitadoNombreInput.value = guest.nombre;
+    invitadoNombreInput.dataset.guestKey = guestKey;
     invitadoCuposInput.value = guest.cupos;
+    rsvpSubmitBtn.textContent = 'Enviar confirmación';
 
     stepSearch.classList.add('hidden');
     stepForm.classList.remove('hidden');
+
+    // Si ya había confirmado antes, precargamos sus respuestas para editarlas.
+    if (supabaseClient) {
+      try {
+        const { data, error } = await supabaseClient
+          .from('rsvps')
+          .select('*')
+          .eq('guest_key', guestKey)
+          .maybeSingle();
+
+        if (!error && data) {
+          asistenciaSelect.value = data.asistencia || '';
+          asistenciaSelect.dispatchEvent(new Event('change'));
+          if (data.cupos_asisten !== null && data.cupos_asisten !== undefined) {
+            cuposSelect.value = data.cupos_asisten;
+          }
+          nombresAcompanantesInput.value = data.nombres_acompanantes || '';
+          cancionInput.value = data.cancion || '';
+          mensajeInput.value = data.mensaje || '';
+          rsvpSubmitBtn.textContent = 'Actualizar confirmación';
+        }
+      } catch (err) {
+        console.error('No se pudo revisar si ya existía una confirmación previa:', err);
+      }
+    }
   }
 
-  function handleSearch() {
+  async function handleSearch() {
     const guest = findGuest(searchInput.value);
     if (!guest) {
       searchStatus.textContent = 'No encontramos tu invitación. Verifica cómo escribiste tu nombre o contáctanos directamente.';
@@ -259,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     searchStatus.textContent = '';
-    showGuestForm(guest);
+    await showGuestForm(guest);
   }
 
   searchBtn.addEventListener('click', handleSearch);
@@ -289,27 +331,43 @@ document.addEventListener('DOMContentLoaded', () => {
     rsvpStatus.textContent = 'Enviando...';
 
     const formData = new FormData(rsvpForm);
+    const guestKey = invitadoNombreInput.dataset.guestKey;
 
-    if (RSVP_ENDPOINT.includes('TU_ID_AQUI')) {
-      rsvpStatus.textContent = 'Configura tu formulario de RSVP (ver README) para recibir esta confirmación.';
-      return;
+    if (supabaseClient && guestKey) {
+      const payload = {
+        guest_key: guestKey,
+        guest_nombre: invitadoNombreInput.value,
+        asistencia: formData.get('asistencia') || '',
+        cupos_asisten: formData.get('cupos_asisten') !== null ? Number(formData.get('cupos_asisten')) : null,
+        nombres_acompanantes: formData.get('nombres_acompanantes') || '',
+        cancion: formData.get('cancion') || '',
+        mensaje: formData.get('mensaje') || '',
+        updated_at: new Date().toISOString(),
+      };
+
+      try {
+        const { error } = await supabaseClient
+          .from('rsvps')
+          .upsert(payload, { onConflict: 'guest_key' });
+        if (error) throw error;
+      } catch (err) {
+        console.error('Error al guardar en la base de datos:', err);
+        rsvpStatus.textContent = 'Ocurrió un error, intenta de nuevo.';
+        return;
+      }
     }
 
-    try {
-      const response = await fetch(RSVP_ENDPOINT, {
+    // Notificación por correo (opcional). Si no está configurado, se omite en silencio.
+    if (!RSVP_ENDPOINT.includes('TU_ID_AQUI')) {
+      fetch(RSVP_ENDPOINT, {
         method: 'POST',
         body: formData,
         headers: { Accept: 'application/json' },
-      });
-      if (response.ok) {
-        rsvpStatus.textContent = '¡Gracias por confirmar tu asistencia!';
-        rsvpForm.reset();
-        setTimeout(closeModal, 2500);
-      } else {
-        rsvpStatus.textContent = 'Ocurrió un error, intenta de nuevo.';
-      }
-    } catch (err) {
-      rsvpStatus.textContent = 'Ocurrió un error, intenta de nuevo.';
+      }).catch(() => {});
     }
+
+    rsvpStatus.textContent = '¡Gracias por confirmar tu asistencia!';
+    rsvpForm.reset();
+    setTimeout(closeModal, 2500);
   });
 });

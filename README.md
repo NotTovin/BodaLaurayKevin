@@ -69,6 +69,56 @@ de esos asistirán y sus nombres. Si no lo encuentra, le pide que verifique cóm
 > persona que revise el código fuente podría verla. Para una boda es un riesgo mínimo,
 > pero evita poner datos sensibles (teléfonos, direcciones) ahí.
 
+## 3.1 Evitar confirmaciones duplicadas y permitir editarlas (Supabase)
+
+Para que cada invitado solo pueda tener **una** confirmación (y pueda editarla si ya
+la había llenado), la página guarda las respuestas en una base de datos gratuita de
+Supabase:
+
+1. Crea una cuenta en https://supabase.com y un proyecto nuevo.
+2. En el "SQL Editor" del proyecto, corre este código para crear la tabla:
+   ```sql
+   create table rsvps (
+     id uuid primary key default gen_random_uuid(),
+     guest_key text unique not null,
+     guest_nombre text not null,
+     asistencia text,
+     cupos_asisten int,
+     nombres_acompanantes text,
+     cancion text,
+     mensaje text,
+     updated_at timestamptz default now()
+   );
+
+   alter table rsvps enable row level security;
+
+   create policy "Public can read" on rsvps for select using (true);
+   create policy "Public can insert" on rsvps for insert with check (true);
+   create policy "Public can update" on rsvps for update using (true);
+   ```
+3. Ve a Project Settings → API y copia el "Project URL" y la clave "anon public".
+4. En `js/main.js`, reemplaza:
+   ```js
+   const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
+   const SUPABASE_ANON_KEY = 'TU_ANON_KEY_AQUI';
+   ```
+   con tus valores reales.
+
+Con esto, cada vez que alguien confirma, se guarda (o actualiza, si ya existía) su fila
+en la tabla `rsvps` usando su nombre normalizado como identificador único. Si vuelve a
+buscar su invitación, el formulario le aparece con lo que puso la última vez, listo para
+editar y reenviar. El botón cambia a "Actualizar confirmación" cuando detecta una
+confirmación previa.
+
+Puedes ver todas las respuestas en cualquier momento entrando a Supabase → Table Editor
+→ tabla `rsvps`.
+
+> Nota de privacidad: la clave "anon public" queda visible en el código de la página
+> (es normal e inevitable en un sitio estático como este). Con las políticas de arriba,
+> cualquier persona que inspeccione el código técnicamente podría leer la tabla completa
+> de confirmaciones. Para una boda es un riesgo bajo, pero evita pedir datos sensibles
+> (números de tarjeta, contraseñas, etc.) en el formulario.
+
 ## 4. Activar el formulario de "Confirmar Asistencia" (RSVP)
 
 Como esta página es estática (sin servidor propio), usamos un servicio gratuito para
