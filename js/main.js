@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== Base de datos (Supabase) para evitar confirmaciones duplicadas =====
   // Reemplaza estos dos valores con los de tu proyecto en Supabase
   // (Project Settings -> API -> Project URL / anon public key).
-  const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
-  const SUPABASE_ANON_KEY = 'TU_ANON_KEY_AQUI';
+  const SUPABASE_URL = 'https://ivclpqoqefhmckxrydtw.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml2Y2xwcW9xZWZobWNreHJ5ZHR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1MDk4NjQsImV4cCI6MjEwMzA4NTg2NH0.jH0lLlWpIq5OX8TtQAql0PJaBwOJ33Cw8UoGkAUYUKc';
   const supabaseClient = (window.supabase && !SUPABASE_URL.includes('TU-PROYECTO'))
     ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     : null;
