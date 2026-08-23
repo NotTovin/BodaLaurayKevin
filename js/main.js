@@ -62,25 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== Agregar al calendario (.ics) =====
   const addToCalendarBtn = document.getElementById('add-to-calendar');
   addToCalendarBtn.addEventListener('click', () => {
-    const ics = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'BEGIN:VEVENT',
-      'SUMMARY:Boda de Laura & Kevin',
-      'DTSTART:20261018T150000',
-      'DTEND:20261018T230000',
-      'LOCATION:Iglesia San Pedro Apóstol, Santa Bárbara de Heredia',
-      'DESCRIPTION:¡Nos casamos! Ceremonia 3:00 PM, recepción a continuación en Sala de Eventos Santa Mónica, Rosales de Alajuela.',
-      'END:VEVENT',
-      'END:VCALENDAR',
-    ].join('\r\n');
-    const blob = new Blob([ics], { type: 'text/calendar' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'boda-laura-kevin.ics';
-    link.click();
-    URL.revokeObjectURL(url);
+    if (platform === 'apple') {
+      // En iPhone/iPad/Mac, abrir un .ics directamente activa la pantalla
+      // nativa de "Agregar evento" de Apple Calendar.
+      const ics = buildIcs();
+      const dataUrl = `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
+      window.location.href = dataUrl;
+    } else {
+      // Android, Windows y el resto: directo a Google Calendar con el evento prellenado.
+      window.open(buildGoogleCalendarUrl(), '_blank', 'noopener');
+    }
   });
 
   // ===== Cuenta regresiva =====
