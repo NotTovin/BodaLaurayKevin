@@ -10,9 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function enterSite() {
     music.volume = 0.5;
-    music.play().catch((err) => {
+    music.play().catch(() => {
       // Autoplay bloqueado por el navegador; el usuario puede activarla desde el reproductor.
-      console.warn('No se pudo reproducir automáticamente al entrar:', err);
     });
     welcomeScreen.classList.add('fade-out');
     siteContent.classList.remove('hidden');
@@ -30,18 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   playerPlayBtn.addEventListener('click', () => {
     if (music.paused) {
-      music.play().catch((err) => console.error('Error al reproducir la canción:', err));
+      music.play().catch(() => {});
     } else {
       music.pause();
     }
-  });
-  music.addEventListener('error', () => {
-    const codes = { 1: 'MEDIA_ERR_ABORTED', 2: 'MEDIA_ERR_NETWORK', 3: 'MEDIA_ERR_DECODE', 4: 'MEDIA_ERR_SRC_NOT_SUPPORTED' };
-    const err = music.error;
-    console.error(
-      'No se pudo cargar el audio. Revisa que exista assets/audio/musica.mp3 (mismo nombre y mayúsculas/minúsculas exactas).',
-      err ? codes[err.code] : ''
-    );
   });
   playerPrevBtn.addEventListener('click', () => { music.currentTime = 0; });
   playerNextBtn.addEventListener('click', () => {
@@ -59,9 +50,56 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ===== Agregar al calendario (.ics) =====
+  // ===== Agregar al calendario (Google Calendar / Apple Calendar / etc.) =====
   const addToCalendarBtn = document.getElementById('add-to-calendar');
+
+  const EVENT_TITLE = 'Boda de Laura & Kevin';
+  const EVENT_LOCATION = 'Iglesia San Pedro Apóstol, Santa Bárbara de Heredia';
+  const EVENT_DESCRIPTION = '¡Nos casamos! Ceremonia 3:00 PM, recepción a continuación en Sala de Eventos Santa Mónica, Rosales de Alajuela.';
+  // Horario en hora de Costa Rica (UTC-6), expresado también en UTC para el link de Google.
+  const EVENT_START_LOCAL = '20261018T150000';
+  const EVENT_END_LOCAL = '20261018T230000';
+  const EVENT_START_UTC = '20261018T210000Z';
+  const EVENT_END_UTC = '20261019T050000Z';
+
+  function getDevicePlatform() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera || '';
+    const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+    const isMac = /Macintosh/.test(ua) && navigator.maxTouchPoints <= 1;
+    if (isIOS || isMac) return 'apple';
+    if (/android/i.test(ua)) return 'android';
+    return 'other';
+  }
+
+  function buildIcs() {
+    return [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'BEGIN:VEVENT',
+      `SUMMARY:${EVENT_TITLE}`,
+      `DTSTART:${EVENT_START_LOCAL}`,
+      `DTEND:${EVENT_END_LOCAL}`,
+      `LOCATION:${EVENT_LOCATION}`,
+      `DESCRIPTION:${EVENT_DESCRIPTION}`,
+      'END:VEVENT',
+      'END:VCALENDAR',
+    ].join('\r\n');
+  }
+
+  function buildGoogleCalendarUrl() {
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: EVENT_TITLE,
+      dates: `${EVENT_START_UTC}/${EVENT_END_UTC}`,
+      details: EVENT_DESCRIPTION,
+      location: EVENT_LOCATION,
+    });
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  }
+
   addToCalendarBtn.addEventListener('click', () => {
+    const platform = getDevicePlatform();
+
     if (platform === 'apple') {
       // En iPhone/iPad/Mac, abrir un .ics directamente activa la pantalla
       // nativa de "Agregar evento" de Apple Calendar.
