@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laura & Kevin | Nos casamos</title>
+<meta name="description" content="Invitación de boda de Laura & Kevin - 18 de Octubre 2026">
+
+<!-- Fuentes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Alex+Brush&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ===== PANTALLA DE BIENVENIDA (SOBRE) ===== -->
+<section id="welcome-screen">
+  <div class="welcome-content">
+    <img class="welcome-img" src="assets/img/design/00-envelope.webp" alt="Invitación de Laura &amp; Kevin. Domingo 18 Octubre 2026">
+    <button id="enter-btn" class="hit-area seal-hit" aria-label="Abrir invitación"></button>
+  </div>
+</section>
+
+<!-- ===== CONTENIDO PRINCIPAL (reproducción exacta del PDF) ===== -->
+<div id="site-content" class="hidden">
+<div class="frame">
+
+  <div class="pdf-slice">
+    <img src="assets/img/design/01-cover.webp" alt="Laura &amp; Kevin. Después de tantos momentos compartidos, sueños cumplidos y aventuras por vivir, hemos decidido dar el siguiente paso juntos. ¡Nos casamos!">
+  </div>
+
+  <div class="pdf-slice">
+    <img src="assets/img/design/02-player.webp" alt="Nuestra canción. Nos encantaría que fueras parte de este momento tan especial">
+    <div class="hit-area player-progress" id="player-progress" style="top:6%;height:7%;left:29%;width:41%" role="slider" aria-label="Progreso de la canción" tabindex="0">
+      <span id="player-dot" class="player-dot"></span>
+    </div>
+    <button class="hit-area" id="player-prev" style="top:13%;height:22%;left:37%;width:8%" aria-label="Reiniciar canción"></button>
+    <button class="hit-area" id="player-play" style="top:11%;height:26%;left:45%;width:10%" aria-label="Reproducir o pausar canción"></button>
+    <button class="hit-area" id="player-next" style="top:13%;height:22%;left:55.5%;width:8%" aria-label="Adelantar canción"></button>
+  </div>
+
+  <div class="pdf-slice">
+    <img src="assets/img/design/03-date.webp" alt="Domingo 18 Octubre 2026. Faltan...">
+    <button class="hit-area" id="add-to-calendar" style="top:38%;height:10%;left:10%;width:80%" aria-label="Agregar al calendario"></button>
+    <div id="countdown" class="countdown" style="top:68%;height:16%;left:6%;width:88%">
+      <div class="countdown-item">
+        <span id="cd-days">00</span>
+        <small>días</small>
+      </div>
+      <div class="countdown-item">
+        <span id="cd-hours">00</span>
+        <small>hs</small>
+      </div>
+      <div class="countdown-item">
+        <span id="cd-minutes">00</span>
+        <small>min</small>
+      </div>
+      <div class="countdown-item">
+        <span id="cd-seconds">00</span>
+        <small>seg</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="pdf-slice">
+    <img src="assets/img/design/04-ceremony-photos.webp" alt="Ceremonia Religiosa">
+  </div>
+
+  <div class="pdf-slice">
+    <img src="assets/img/design/05-venues.webp" alt="Ceremonia: Iglesia San Pedro Apóstol, Santa Bárbara de Heredia, 3:00 PM. Recepción: Sala de Eventos Santa Mónica, Rosales de Alajuela">
+    <a class="hit-area" href="https://www.google.com/maps/search/?api=1&query=Iglesia%20San%20Pedro%20Ap%C3%B3stol%2C%20Santa%20B%C3%A1rbara%20de%20Heredia" target="_blank" rel="noopener" style="top:16%;height:9%;left:24%;width:52%" aria-label="Ver ubicación de la ceremonia"></a>
+    <a class="hit-area" href="https://maps.app.goo.gl/xARkXFwcqKtGew5W6" target="_blank" rel="noopener" style="top:81%;height:9%;left:24%;width:52%" aria-label="Ver ubicación de la recepción"></a>
+  </div>
+
+  <div class="pdf-slice">
+    <img src="assets/img/design/06-itinerary.webp" alt="Itinerario: 3:00 pm Ceremonia, 4:00 pm Coctel de Bienvenida, 4:30 pm Entrada de Esposos, 6:45 pm Cena, 7:00 pm Show, 9:00 pm Despedida">
+  </div>
+
+  <div class="pdf-slice">
+    <img src="assets/img/design/07-dresscode.webp" alt="Código de vestimenta: Formal. Por favor evitar los siguientes colores. Damas / Caballeros">
+  </div>
+
+  <div class="pdf-slice">
+    <img src="assets/img/design/08-confirm-btn.webp" alt="Confirmar aquí">
+    <button class="hit-area" id="open-rsvp-modal" style="top:5%;height:90%;left:15%;width:70%" aria-label="Confirmar asistencia"></button>
+  </div>
+
+  <div class="pdf-slice">
+    <img src="assets/img/design/09-gift-note.webp" alt="Adoramos a los niños, pero creemos que necesitan una noche libre. Solo adultos, por favor. Su presencia es nuestro mejor regalo. Si desean tener un detalle con nosotros, te agradeceríamos que fuera en efectivo. Pondremos una caja de sobres el día de la recepción.">
+  </div>
+
+  <div class="pdf-slice">
+    <img src="assets/img/design/10-closing.webp" alt="Laura &amp; Kevin, te esperamos">
+  </div>
+
+</div>
+</div>
+
+<!-- ===== MODAL RSVP ===== -->
+<div id="rsvp-modal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <button id="modal-close" class="modal-close" aria-label="Cerrar">&times;</button>
+
+    <!-- Paso 1: buscar invitación -->
+    <div id="modal-step-search">
+      <h3 class="modal-title">Confirmar Asistencia</h3>
+      <p class="modal-text">Escribe tu nombre o el de tu familia tal como aparece en tu invitación</p>
+      <div class="form-group">
+        <input type="text" id="guest-search-input" placeholder="Ej. Kevin Alfaro">
+      </div>
+      <div style="height: 1em;"></div>
+      <button id="guest-search-btn" class="btn btn-primary">Buscar mi invitación</button>
+      <p id="guest-search-status" class="rsvp-status"></p>
+    </div>
+
+    <!-- Paso 2: formulario de confirmación -->
+    <div id="modal-step-form" class="hidden">
+      <img id="guest-lugares-img" class="guest-lugares-img" src="" alt="Lugares reservados">
+      <h3 id="guest-greeting" class="modal-title">¡Hola!</h3>
+
+      <form id="rsvp-form" class="rsvp-form">
+        <div class="form-group">
+          <label for="asistencia">¿Asistirán?</label>
+          <select id="asistencia" name="asistencia" required>
+            <option value="">Selecciona una opción</option>
+            <option value="Sí, asistiremos">Sí, asistiremos</option>
+            <option value="No podremos asistir">No podremos asistir</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="cupos-group">
+          <label for="cupos-asisten">¿Cuántos de tus lugares asistirán?</label>
+          <select id="cupos-asisten" name="cupos_asisten"></select>
+        </div>
+
+        <div class="form-group" id="nombres-group">
+          <label for="nombres-acompanantes">Nombres de quienes asistirán</label>
+          <textarea id="nombres-acompanantes" name="nombres_acompanantes" rows="2" placeholder="Uno por línea"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="cancion">¿Qué canción no puede faltar? (opcional)</label>
+          <input type="text" id="cancion" name="cancion">
+        </div>
+
+        <div class="form-group">
+          <label for="mensaje">Mensaje para los novios (opcional)</label>
+          <textarea id="mensaje" name="mensaje" rows="3"></textarea>
+        </div>
+
+        <input type="hidden" id="invitado-nombre" name="invitado">
+        <input type="hidden" id="invitado-cupos" name="cupos_reservados">
+
+        <button type="submit" class="btn btn-primary">Enviar confirmación</button>
+        <p id="rsvp-status" class="rsvp-status"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<audio id="bg-music" loop preload="none">
+  <source src="assets/audio/musica.mp3" type="audio/mpeg">
+</audio>
+
+<script src="js/main.js"></script>
+</body>
+</html>

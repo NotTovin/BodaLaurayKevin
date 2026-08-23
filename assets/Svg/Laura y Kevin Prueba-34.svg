@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 372.61 347.11">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-1" x="-706.44" y="-1345.39" width="612.18" height="718.15" transform="translate(75.74 -34.25) rotate(-4.48)"/>
+    </clipPath>
+  </defs>
+  <image width="844" height="2000" transform="translate(275.13) rotate(49.98) scale(.18)" xlink:href="../../Invitacion Boda_Carpeta/Links/watercolor_twig_08.png"/>
+  <g class="cls-2">
+    <image width="738" height="1600" transform="translate(-741.5764 -1400.6251) rotate(-4.4753) scale(.911)" xlink:href="../../Invitacion Boda_Carpeta/Links/WhatsApp Image 2026-08-17 at 20.19.45.jpeg"/>
+  </g>
+</svg>

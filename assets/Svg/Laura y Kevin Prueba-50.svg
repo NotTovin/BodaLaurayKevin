@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="BG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1126.02 66.64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #eff0ea;
+        opacity: .47;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        fill: #848e76;
+      }
+    </style>
+  </defs>
+  <rect class="cls-3" x="1.5" y="-552.5" width="1124.94" height="11043.02"/>
+  <g>
+    <rect class="cls-2" x="53.38" y="-478.16" width="1024" height="10901.21"/>
+    <image width="3450" height="3450" transform="translate(74.54 -429.13) scale(.28 .47)" xlink:href="../../Invitacion Boda_Carpeta/Links/white-paper-texture.jpg"/>
+    <rect class="cls-1" x="72.69" y="-427.24" width="986.21" height="7581.71"/>
+  </g>
+</svg>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 603.19 90.56">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: .33em;
+      }
+
+      .cls-2 {
+        letter-spacing: .37em;
+      }
+
+      .cls-3 {
+        fill: #fff;
+        font-family: ArialNarrow, 'Arial Narrow';
+        font-size: 39.13px;
+      }
+
+      .cls-4 {
+        fill: #848e76;
+      }
+
+      .cls-5 {
+        opacity: .58;
+      }
+    </style>
+  </defs>
+  <g>
+    <g class="cls-5">
+      <rect class="cls-4" x="2.06" y="3.92" width="601.13" height="73.43"/>
+    </g>
+    <rect class="cls-4" width="601.13" height="73.43"/>
+  </g>
+  <text class="cls-3" transform="translate(67.27 53.62)"><tspan class="cls-2" x="0" y="0">CONFIRMAR</tspan><tspan class="cls-1" x="324.95" y="0"> </tspan><tspan class="cls-2" x="346.64" y="0">AQUÍ</tspan></text>
+</svg>

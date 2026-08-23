@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 827.26 321.34">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #848e76;
+        font-size: 222.35px;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        font-family: Amandine-Regular, Amandine;
+      }
+
+      .cls-4, .cls-2, .cls-3 {
+        fill: #787f6e;
+      }
+
+      .cls-5 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-6 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-2 {
+        font-size: 67px;
+      }
+
+      .cls-3 {
+        font-size: 55.45px;
+      }
+    </style>
+  </defs>
+  <text class="cls-1" transform="translate(317.01 257.97)"><tspan x="0" y="0">18</tspan></text>
+  <text class="cls-2" transform="translate(0 208.63)"><tspan x="0" y="0">Domin</tspan><tspan class="cls-5" x="214.33" y="0">g</tspan><tspan x="246.15" y="0">o</tspan></text>
+  <text class="cls-3" transform="translate(296.8 48.91)"><tspan x="0" y="0">Octub</tspan><tspan class="cls-6" x="163.51" y="0">r</tspan><tspan x="183.03" y="0">e</tspan></text>
+  <text class="cls-2" transform="translate(615.52 208.63)"><tspan x="0" y="0">2026</tspan></text>
+  <rect class="cls-4" x="4.77" y="138.13" width="277.83" height="3.39"/>
+  <rect class="cls-4" x="4.77" y="222.83" width="277.83" height="3.39"/>
+  <g>
+    <rect class="cls-4" x="549.42" y="138.13" width="277.83" height="3.39"/>
+    <rect class="cls-4" x="549.42" y="222.83" width="277.83" height="3.39"/>
+  </g>
+</svg>

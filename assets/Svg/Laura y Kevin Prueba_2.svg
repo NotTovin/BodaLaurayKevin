@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 596.45 609.09">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-1" x="65.18" y="60.88" width="469.17" height="462.47" transform="translate(-48.65 60.17) rotate(-10.61)"/>
+    </clipPath>
+  </defs>
+  <rect class="cls-2" x="46.17" y="42.51" width="508.47" height="501.51" transform="translate(-48.85 60.31) rotate(-10.61)"/>
+  <g class="cls-3">
+    <image width="1024" height="1045" transform="translate(0 101.13) rotate(-10.61) scale(.49)" xlink:href="../../Gemini_Generated_Image_rc9yzbrc9yzbrc9y.jpeg"/>
+  </g>
+</svg>

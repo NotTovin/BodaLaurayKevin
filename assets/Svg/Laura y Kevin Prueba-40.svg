@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600.97 87.5">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #848e76;
+        font-family: Amandine-Regular, Amandine;
+        font-size: 74.98px;
+      }
+
+      .cls-2 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-3 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-4 {
+        letter-spacing: 0em;
+      }
+    </style>
+  </defs>
+  <text class="cls-1" transform="translate(0 66.13)"><tspan x="0" y="0">¡NOS </tspan><tspan class="cls-4" x="197.57" y="0">C</tspan><tspan class="cls-3" x="255.61" y="0">A</tspan><tspan class="cls-2" x="306.97" y="0">S</tspan><tspan x="350.38" y="0">AMOS!</tspan></text>
+</svg>
