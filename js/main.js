@@ -56,9 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const EVENT_TITLE = 'Boda de Laura & Kevin';
   const EVENT_LOCATION = 'Iglesia San Pedro Apóstol, Santa Bárbara de Heredia';
   const EVENT_DESCRIPTION = '¡Nos casamos! Ceremonia 3:00 PM, recepción a continuación en Sala de Eventos Santa Mónica, Rosales de Alajuela.';
-  // Horario en hora de Costa Rica (UTC-6), expresado también en UTC para el link de Google.
-  const EVENT_START_LOCAL = '20261018T150000';
-  const EVENT_END_LOCAL = '20261018T230000';
+  // Horario del evento en UTC (Costa Rica es UTC-6), usado para el link de Google Calendar.
   const EVENT_START_UTC = '20261018T210000Z';
   const EVENT_END_UTC = '20261019T050000Z';
 
@@ -69,21 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isIOS || isMac) return 'apple';
     if (/android/i.test(ua)) return 'android';
     return 'other';
-  }
-
-  function buildIcs() {
-    return [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'BEGIN:VEVENT',
-      `SUMMARY:${EVENT_TITLE}`,
-      `DTSTART:${EVENT_START_LOCAL}`,
-      `DTEND:${EVENT_END_LOCAL}`,
-      `LOCATION:${EVENT_LOCATION}`,
-      `DESCRIPTION:${EVENT_DESCRIPTION}`,
-      'END:VEVENT',
-      'END:VCALENDAR',
-    ].join('\r\n');
   }
 
   function buildGoogleCalendarUrl() {
@@ -101,11 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const platform = getDevicePlatform();
 
     if (platform === 'apple') {
-      // En iPhone/iPad/Mac, abrir un .ics directamente activa la pantalla
-      // nativa de "Agregar evento" de Apple Calendar.
-      const ics = buildIcs();
-      const dataUrl = `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
-      window.location.href = dataUrl;
+      // Navegar a un .ics real alojado en el sitio (en vez de un data: URI)
+      // es lo que hace que iOS Safari abra Apple Calendar de forma confiable.
+      window.location.href = '/assets/wedding-event.ics';
     } else {
       // Android, Windows y el resto: directo a Google Calendar con el evento prellenado.
       window.open(buildGoogleCalendarUrl(), '_blank', 'noopener');
