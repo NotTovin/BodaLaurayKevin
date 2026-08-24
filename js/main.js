@@ -174,7 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
     { nombre: 'Dennis Saborio', cupos: 2, alias: ['Saborio Dennis', 'Denis Saborio'] },
     { nombre: 'Josue Araya', cupos: 1, alias: ['Araya Josue'] },
     { nombre: 'Mary Marchena', cupos: 1, alias: ['Tita'] },
-    { nombre: 'Jose Gonzalez', cupos: 1, alias: ['Gonzalez Jose'] },
   ];
 
   function normalize(text) {
