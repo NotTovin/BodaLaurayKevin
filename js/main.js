@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { nombre: 'Gravin Alfaro', cupos: 2, alias: ['Alfaro Gravin'] },
     { nombre: 'Elena Rivera', cupos: 5, alias: ['Rivera Elena'] },
     { nombre: 'Maria Cascante', cupos: 1, alias: ['Cascante Maria'] },
-    { nombre: 'Carlos Salazar', cupos: 1, alias: ['Salazar Carlos'] },
+    { nombre: 'Carlos Artavia', cupos: 1, alias: ['Artavia Carlos'] },
     { nombre: 'Ana Cascante', cupos: 1, alias: ['Cascante Ana'] },
     { nombre: 'Emmanuel Rivera', cupos: 1, alias: ['Rivera Emmanuel'] },
     { nombre: 'Luis Rivera', cupos: 1, alias: ['Rivera Luis'] },
